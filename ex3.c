@@ -21,6 +21,8 @@ Assignment: ex3
 
 char brands[NUM_OF_BRANDS][BRANDS_NAMES] = {"Toyoga", "HyunNight", "Mazduh", "FolksVegan", "Key-Yuh"};
 char types[NUM_OF_TYPES][TYPES_NAMES] = {"SUV", "Sedan", "Coupe", "GT"};
+int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES];
+int dataForBrand[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES];
 
 
 void printMenu(){
@@ -33,25 +35,70 @@ void printMenu(){
            "6.Provide Average Delta Metrics\n"
            "7.exit\n");
 }
+void InitArray(int array[][NUM_OF_BRANDS][NUM_OF_TYPES], int size1, int size2, int size3) { //initializing array to -1
+    for (int i = 0; i < size1; i++) {
+        for (int j = 0; j < size2; j++) {
+            for (int k = 0; k < size3; k++) {
+                array[i][j][k] = -1;
+            }
+        }
+    }
+}
+void DailyData(int index, int dailySum[], int size) {
+    int day = 0;
+    //int dataForBrand[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES];
+   // InitArray(dataForBrand, DAYS_IN_YEAR, NUM_OF_BRANDS, NUM_OF_TYPES);
+    for (int i = 0; i < size ;i++) {
+        while (dataForBrand[day][index][i] != -1) {
+            day++;
+        }
+        dataForBrand[day][index][i] = dailySum[i];
+    }
+}
 
 
 int main() {
-    int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES];
+    //int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES];
     int days[NUM_OF_BRANDS] = {0};
     int choice;
+    InitArray(cube, DAYS_IN_YEAR, NUM_OF_BRANDS, NUM_OF_TYPES);
+    InitArray(dataForBrand, DAYS_IN_YEAR, NUM_OF_BRANDS, NUM_OF_TYPES);
     printMenu();
     scanf("%d", &choice);
     while(choice != done){
         switch(choice){
-            case addOne:
-                //...
+            case addOne: {
+                int index;
+                int dailySum[NUM_OF_TYPES];
+                printf("Add data sales for brand: \n");
+                scanf("%d", &index);
+                if (index < 0 || index > NUM_OF_TYPES) {
+                    printf("This brand is not valid\n");
+                    break;
+                }
+                printf("Add sales:\n");
+                for (int i = 0; i < NUM_OF_TYPES; i++) {
+                    scanf("%d", &dailySum[i]);
+                }
+                DailyData(index, dailySum, NUM_OF_TYPES);
                 break;
-            case addAll:
-                //...
+            }
+            case addAll: {
+                int day = 0;
+                while (cube[day][NUM_OF_BRANDS][NUM_OF_TYPES] != -1) {
+                    day++;
+                }
+
                 break;
-            /*
-             ......
-             */
+            }
+            case stats:
+                break;
+            case print:
+                break;
+            case insights:
+                break;
+            case deltas:
+                break;
             default:
                 printf("Invalid input\n");
         }
