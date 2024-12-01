@@ -175,8 +175,28 @@ int main() {
                 PrintCube(day);
                 break;
             }
-            case insights:
+            case insights: {
+                int counter = 0;
+                int maxNum = 0; //checking place with biggest counter
+                int current[NUM_OF_BRANDS] = {0};//buffer array for brands
+                for (int i = 0; i < NUM_OF_BRANDS; i++) {
+                    for (int j = 0; j < day; j++) {
+                        for (int k = 0; k < NUM_OF_TYPES; k++) {
+                            current[i] += dataForBrand[j][i][k];
+                        }
+                    }
+                }
+                counter = current[0];
+                for (int i = 1; i < NUM_OF_BRANDS; i++) {
+                    if (counter < current[i]) {
+                        counter = current[i];
+                        maxNum = i;
+                    }
+                }
+                printf("The best selling brand overall is %s: %d$\n", brands[maxNum], counter);
+
                 break;
+            }
             case deltas:
                 break;
             default:
