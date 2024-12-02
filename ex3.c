@@ -61,7 +61,10 @@ void PrintCube(int day) {
         for (int j = 0; j < day; j++) {
             printf("Day %d-", j + 1);
             for (int k = 0; k < NUM_OF_TYPES; k++) {
-                printf(" %s: %d ", types[k], cube[j][i][k]);
+                if (cube[j][i][k] != 0)
+                    printf(" %s: %d ", types[k], cube[j][i][k]);
+                else
+                    printf(" %s: ", types[k]);
             }
             printf("\n");
         }
@@ -75,6 +78,7 @@ int main() {
    // int days[NUM_OF_BRANDS] = {0};
     int dailySum[NUM_OF_TYPES];
     int choice, index, day = 0;
+    int brandEarning[DAYS_IN_YEAR][NUM_OF_BRANDS];
     InitArray(cube, DAYS_IN_YEAR, NUM_OF_BRANDS, NUM_OF_TYPES);
     InitArray(dataForBrand, DAYS_IN_YEAR, NUM_OF_BRANDS, NUM_OF_TYPES);
     printMenu();
@@ -194,7 +198,40 @@ int main() {
                     }
                 }
                 printf("The best selling brand overall is %s: %d$\n", brands[maxNum], counter);
-
+                int current2[NUM_OF_TYPES] = {0};//buffer for checking types
+                for (int i = 0; i < NUM_OF_TYPES; i++) {
+                    for (int j = 0; j < day; j++) {
+                        for (int k = 0; k < NUM_OF_BRANDS; k++) {
+                            current2[i] += dataForBrand[j][k][i];
+                        }
+                    }
+                }
+                counter = current2[0];
+                maxNum = 0;
+                for (int i = 1; i < NUM_OF_TYPES; i++) {
+                    if (current2[i] > counter) {
+                        counter = current2[i];
+                        maxNum = i;
+                    }
+                }
+                printf("The best selling type of car is %s: %d$\n", types[maxNum], counter);
+                int current3[day] = {0};
+                for (int i = 0; i < day; i++) {
+                    for (int j = 0; j < NUM_OF_BRANDS; j++) {
+                        for (int k = 0; k < NUM_OF_TYPES; k++) {
+                            current3[i] += dataForBrand[i][j][k];
+                        }
+                    }
+                }
+                counter = current3[0];
+                maxNum = 0;
+                for (int i = 1; i < day; i++) {
+                    if (current3[i] > counter) {
+                        counter = current3[i];
+                        maxNum = i;
+                    }
+                }
+                printf("The most profitable day was day number %d: %d$\n", maxNum, counter);
                 break;
             }
             case deltas:
