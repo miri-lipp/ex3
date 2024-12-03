@@ -284,8 +284,10 @@ int main() {
                 printf("The most profitable day was day number %d: %d$\n", maxNum, counter);
                 break;
             }
-            case deltas:
+            case deltas: {
+
                 break;
+            }
             default:
                 printf("Invalid input\n");
         }
