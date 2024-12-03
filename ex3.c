@@ -54,22 +54,39 @@ void DailyData(int index, int dailySum[], int size , int array[][NUM_OF_BRANDS][
         array[day][index][i] = dailySum[i];
     }
 }
-void PrintCube(int day) {
-    printf("*****************************************\n\n");
-    for (int i = 0; i < NUM_OF_BRANDS; i++) {
-        printf("Sales for %s:\n", brands[i]);
-        for (int j = 0; j < day; j++) {
-            printf("Day %d-", j + 1);
-            for (int k = 0; k < NUM_OF_TYPES; k++) {
-                if (cube[j][i][k] != 0)
-                    printf(" %s: %d ", types[k], cube[j][i][k]);
-                else
-                    printf(" %s: ", types[k]);
-            }
-            printf("\n");
-        }
+// void PrintCube(int day) {
+//     printf("*****************************************\n\n");
+//     for (int i = 0; i < NUM_OF_BRANDS; i++) {
+//         printf("Sales for %s:\n", brands[i]);
+//         for (int j = 0; j < day; j++) {
+//             printf("Day %d-", j + 1);
+//             for (int k = 0; k < NUM_OF_TYPES; k++) {
+//                 if (cube[j][i][k] != 0)
+//                     printf(" %s: %d ", types[k], cube[j][i][k]);
+//                 else
+//                     printf(" %s: ", types[k]);
+//             }
+//             printf("\n");
+//         }
+//     }
+//     printf("\n*****************************************\n");
+// }
+void printBrands(int index) {
+    printf(" ");
+    for (int i = 0; i < BRANDS_NAMES; i++) {
+        //printf(" ");
+        if (brands[index][i] != '\0')
+            printf("%c", brands[index][i]);
     }
-    printf("\n*****************************************\n");
+    //printf(" ");
+}
+void printTypes(int index) {
+    printf(" ");
+    for (int i = 0; i < TYPES_NAMES; i++) {
+        if (types[index][i] != '\0')
+            printf("%c", types[index][i]);
+    }
+    //printf(" ");
 }
 
 
@@ -80,7 +97,7 @@ int main() {
     int choice, index, day = 0;
     int brandEarning[DAYS_IN_YEAR][NUM_OF_BRANDS];
     InitArray(cube, DAYS_IN_YEAR, NUM_OF_BRANDS, NUM_OF_TYPES);
-    InitArray(dataForBrand, DAYS_IN_YEAR, NUM_OF_BRANDS, NUM_OF_TYPES);
+    //InitArray(dataForBrand, DAYS_IN_YEAR, NUM_OF_BRANDS, NUM_OF_TYPES);
     printMenu();
     scanf("%d", &choice);
     while(choice != done) {
@@ -104,10 +121,12 @@ int main() {
                 int check = 0;
                 for (int i = 0; i < NUM_OF_TYPES; i++) {
                     while (check < NUM_OF_BRANDS) {
-                        printf("No data for brands ");
+                        printf("No data for brands");
                         for (int j = 0; j < NUM_OF_BRANDS; j++) {
                             if (cube[day][j][i] == -1)
-                                printf("%s ", brands[j]);
+                                printBrands(j);
+                                //printf("%s ", brands[j]);
+
                         }
                         printf("\nPlease complete the data \n");
                         scanf("%d", &index);
@@ -157,7 +176,9 @@ int main() {
                         maxNum = i;
                     }
                 }
-                printf("The best sold brand with %d sales was %s\n", counter, brands[maxNum]);
+                printf("The best sold brand with %d sales was", counter);
+                printBrands(maxNum);
+                printf("\n");
                 int current2[NUM_OF_TYPES] = {0}; //buffer array for types sum
                 for (int i = 0; i < NUM_OF_TYPES; i++) {
                     for (int j = 0; j < NUM_OF_BRANDS; j++) {
@@ -172,11 +193,34 @@ int main() {
                         maxNum = i;
                     }
                 }
-                printf("The best sold type with %d sales was %s\n", counter, types[maxNum]);
+                printf("The best sold type with %d sales was", counter);
+                printTypes(maxNum);
+                printf("\n");
                 break;
             }
             case print: {
-                PrintCube(day);
+                //PrintCube(day);
+                printf("*****************************************\n\n");
+                for (int i = 0; i < NUM_OF_BRANDS; i++) {
+                    printf("Sales for");
+                    printBrands(i);
+                    printf(":\n");
+                    for (int j = 0; j < day; j++) {
+                        printf("Day %d-", j + 1);
+                        for (int k = 0; k < NUM_OF_TYPES; k++) {
+                            if (cube[j][i][k] != 0) {
+                                printTypes(k);
+                                printf(": %d", cube[j][i][k]);
+                            }
+                            else {
+                                printTypes(k);
+                                printf(":");
+                            }
+                        }
+                        printf("\n");
+                    }
+                }
+                printf("\n*****************************************\n");
                 break;
             }
             case insights: {
@@ -186,7 +230,7 @@ int main() {
                 for (int i = 0; i < NUM_OF_BRANDS; i++) {
                     for (int j = 0; j < day; j++) {
                         for (int k = 0; k < NUM_OF_TYPES; k++) {
-                            current[i] += dataForBrand[j][i][k];
+                            current[i] += cube[j][i][k];
                         }
                     }
                 }
@@ -197,12 +241,14 @@ int main() {
                         maxNum = i;
                     }
                 }
-                printf("The best selling brand overall is %s: %d$\n", brands[maxNum], counter);
+                printf("The best selling brand overall is");
+                printBrands(maxNum);
+                printf(": %d$\n", counter);
                 int current2[NUM_OF_TYPES] = {0};//buffer for checking types
                 for (int i = 0; i < NUM_OF_TYPES; i++) {
                     for (int j = 0; j < day; j++) {
                         for (int k = 0; k < NUM_OF_BRANDS; k++) {
-                            current2[i] += dataForBrand[j][k][i];
+                            current2[i] += cube[j][k][i];
                         }
                     }
                 }
@@ -214,23 +260,27 @@ int main() {
                         maxNum = i;
                     }
                 }
-                printf("The best selling type of car is %s: %d$\n", types[maxNum], counter);
-                int current3[day] = {0};
+                //printf("The best selling type of car is %s: %d$\n", types[maxNum], counter);
+                printf("The best selling car type is");
+                printTypes(maxNum);
+                printf(": %d$\n", counter);
+                int current3[DAYS_IN_YEAR] = {0};
                 for (int i = 0; i < day; i++) {
                     for (int j = 0; j < NUM_OF_BRANDS; j++) {
-                        for (int k = 0; k < NUM_OF_TYPES; k++) {
-                            current3[i] += dataForBrand[i][j][k];
-                        }
-                    }
+                         for (int k = 0; k < NUM_OF_TYPES; k++) {
+                             current3[i] += cube[i][j][k];
+                         }
+                     }
+                 }
+                 counter = current3[0];
+                 maxNum = 0;
+                 for (int i = 1; i < day; i++) {
+                     if (current3[i] > counter) {
+                         counter = current3[i];
+                         maxNum = i;
+                     }
                 }
-                counter = current3[0];
-                maxNum = 0;
-                for (int i = 1; i < day; i++) {
-                    if (current3[i] > counter) {
-                        counter = current3[i];
-                        maxNum = i;
-                    }
-                }
+                maxNum = maxNum + 1;
                 printf("The most profitable day was day number %d: %d$\n", maxNum, counter);
                 break;
             }
