@@ -285,7 +285,22 @@ int main() {
                 break;
             }
             case deltas: {
+                float delta[NUM_OF_BRANDS] = {0};
+                int counter[DAYS_IN_YEAR][NUM_OF_BRANDS] = {0};
+                for (int i = 0; i < DAYS_IN_YEAR; i++) {
+                    for (int j = 0; j < NUM_OF_TYPES; j++) {
+                        for (int k = 0; k < NUM_OF_BRANDS; k++) {
+                            counter[i][k] += cube[i][k][j];
+                            delta[k] = counter[i][k]
+                        }
+                    }
+                }
 
+                for (int i = 0; i < NUM_OF_BRANDS; i++) {
+                    printf("Brand: ");
+                    printBrands(i);
+                    printf(", Average Delta: ,%f.6");
+                }
                 break;
             }
             default:
