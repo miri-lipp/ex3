@@ -88,6 +88,11 @@ void printTypes(int index) {
     }
     //printf(" ");
 }
+// int CountDeltaChanges(int array) {
+//     int changesRes = 0;
+//     changesRes = dayTwo - dayOne;
+//     return changesRes;
+// }
 
 
 int main() {
@@ -150,7 +155,7 @@ int main() {
                 while (1) {
                     printf("What day would you like to analyze?\n");
                     scanf("%d", &dayUser);
-                    if (dayUser <= 0 || dayUser > day + 1)
+                    if (dayUser <= 0 || dayUser >= day + 1)
                         printf("Please enter a valid day.\n");
                     else
                         break;
@@ -291,15 +296,20 @@ int main() {
                     for (int j = 0; j < NUM_OF_TYPES; j++) {
                         for (int k = 0; k < NUM_OF_BRANDS; k++) {
                             counter[i][k] += cube[i][k][j];
-                            delta[k] = counter[i][k]
                         }
                     }
                 }
+                for (int i = 0; i < NUM_OF_BRANDS; i++) {
+                    if (day > 0)
+                        delta[i] = (float)(counter[day - 1][i] - counter[0][i])/(float)day;
+                    else
+                        delta[i] = 0;
+                }
 
                 for (int i = 0; i < NUM_OF_BRANDS; i++) {
-                    printf("Brand: ");
+                    printf("Brand:");
                     printBrands(i);
-                    printf(", Average Delta: ,%f.6");
+                    printf(", Average Delta: %f\n", delta[i]);
                 }
                 break;
             }
