@@ -67,6 +67,15 @@ void printTypes(int index) {
             printf("%c", types[index][i]);
     }
 }
+int MaxNumInArray(int array[], int size) {
+    int maxNum = 0, buffer = 0;
+    buffer = array[0];
+    for (int i = 1; i < NUM_OF_BRANDS; i++) {
+        if (array[i] > buffer)
+            maxNum = i;
+    }
+    return maxNum;
+}
 
 
 int main() {
@@ -131,7 +140,7 @@ int main() {
                         break;
                 }
                 printf("In day number %d: \n", dayUser);
-                dayUser--;
+                dayUser--; //user enters day by one bigger than actually there are in array because array starts with 0
                 for (int i = 0; i < NUM_OF_BRANDS; i++) {
                     for (int j = 0; j < NUM_OF_TYPES; j++)
                         counter += cube[dayUser][i][j];
@@ -144,7 +153,7 @@ int main() {
                     }
                 }
                 counter = current[0];
-                int maxNum = 0; //checking place in array with biggest counter
+                int maxNum = 0; //checking place in array with the biggest counter
                 for (int i = 1; i < NUM_OF_BRANDS; i++) {
                     if (current[i] > counter) {
                         counter = current[i];
@@ -262,7 +271,7 @@ int main() {
             case deltas: {
                 float delta[NUM_OF_BRANDS] = {0};
                 int counter[DAYS_IN_YEAR][NUM_OF_BRANDS] = {0};
-                for (int i = 0; i < DAYS_IN_YEAR; i++) {
+                for (int i = 0; i < day; i++) {
                     for (int j = 0; j < NUM_OF_TYPES; j++) {
                         for (int k = 0; k < NUM_OF_BRANDS; k++) {
                             counter[i][k] += cube[i][k][j];
