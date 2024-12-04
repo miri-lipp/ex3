@@ -22,8 +22,6 @@ Assignment: ex3
 char brands[NUM_OF_BRANDS][BRANDS_NAMES] = {"Toyoga", "HyunNight", "Mazduh", "FolksVegan", "Key-Yuh"};
 char types[NUM_OF_TYPES][TYPES_NAMES] = {"SUV", "Sedan", "Coupe", "GT"};
 int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES];
-int dataForBrand[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES];
-//int dailySales[DAYS_IN_YEAR][NUM_OF_BRANDS];
 
 
 void printMenu(){
@@ -54,31 +52,13 @@ void DailyData(int index, int dailySum[], int size , int array[][NUM_OF_BRANDS][
         array[day][index][i] = dailySum[i];
     }
 }
-// void PrintCube(int day) {
-//     printf("*****************************************\n\n");
-//     for (int i = 0; i < NUM_OF_BRANDS; i++) {
-//         printf("Sales for %s:\n", brands[i]);
-//         for (int j = 0; j < day; j++) {
-//             printf("Day %d-", j + 1);
-//             for (int k = 0; k < NUM_OF_TYPES; k++) {
-//                 if (cube[j][i][k] != 0)
-//                     printf(" %s: %d ", types[k], cube[j][i][k]);
-//                 else
-//                     printf(" %s: ", types[k]);
-//             }
-//             printf("\n");
-//         }
-//     }
-//     printf("\n*****************************************\n");
-// }
+
 void printBrands(int index) {
     printf(" ");
     for (int i = 0; i < BRANDS_NAMES; i++) {
-        //printf(" ");
         if (brands[index][i] != '\0')
             printf("%c", brands[index][i]);
     }
-    //printf(" ");
 }
 void printTypes(int index) {
     printf(" ");
@@ -86,23 +66,14 @@ void printTypes(int index) {
         if (types[index][i] != '\0')
             printf("%c", types[index][i]);
     }
-    //printf(" ");
 }
-// int CountDeltaChanges(int array) {
-//     int changesRes = 0;
-//     changesRes = dayTwo - dayOne;
-//     return changesRes;
-// }
 
 
 int main() {
-    //int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES];
-   // int days[NUM_OF_BRANDS] = {0};
     int dailySum[NUM_OF_TYPES];
     int choice, index, day = 0;
     int brandEarning[DAYS_IN_YEAR][NUM_OF_BRANDS];
     InitArray(cube, DAYS_IN_YEAR, NUM_OF_BRANDS, NUM_OF_TYPES);
-    //InitArray(dataForBrand, DAYS_IN_YEAR, NUM_OF_BRANDS, NUM_OF_TYPES);
     printMenu();
     scanf("%d", &choice);
     while(choice != done) {
@@ -118,7 +89,7 @@ int main() {
                 for (int i = 0; i < NUM_OF_TYPES; i++) {
                     scanf("%d", &dailySum[i]);
                 }
-                DailyData(index, dailySum, NUM_OF_TYPES, dataForBrand, DAYS_IN_YEAR, NUM_OF_BRANDS, NUM_OF_TYPES);
+                //DailyData(index, dailySum, NUM_OF_TYPES, dataForBrand, DAYS_IN_YEAR, NUM_OF_BRANDS, NUM_OF_TYPES);
                 break;
             }
             case addAll: {
@@ -130,7 +101,6 @@ int main() {
                         for (int j = 0; j < NUM_OF_BRANDS; j++) {
                             if (cube[day][j][i] == -1)
                                 printBrands(j);
-                                //printf("%s ", brands[j]);
 
                         }
                         printf("\nPlease complete the data \n");
