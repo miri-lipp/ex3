@@ -142,7 +142,7 @@ void BestSellingBrandOverall(int cube[][NUM_OF_BRANDS][NUM_OF_TYPES], int totalD
             maxIndex = i;
         }
     }
-    printf("The best selling brand overall is");
+    printf("The best-selling brand overall is");
     printBrands(maxIndex);
     printf(": %d$\n", maxSales);
 }
@@ -163,7 +163,7 @@ void BestSellingTypeOverall(int cube[][NUM_OF_BRANDS][NUM_OF_TYPES], int totalDa
             maxIndex = i;
         }
     }
-    printf("The best selling car type is");
+    printf("The best-selling type of car is");
     printTypes(maxIndex);
     printf(": %d$\n", typeSales);
 }
@@ -198,7 +198,7 @@ void CalculateDelta(int cube[][NUM_OF_BRANDS][NUM_OF_TYPES], int totalDays) {
     }
     for (int i = 0; i < NUM_OF_BRANDS; i++) {
         if (totalDays > 0)
-            delta[i] = (float)(counter[totalDays - 1][i] - counter[0][i])/(float)totalDays;
+            delta[i] = (float)(counter[totalDays - 1][i] - counter[0][i])/(float)(totalDays - 1);
         else
             delta[i] = 0;
     }
