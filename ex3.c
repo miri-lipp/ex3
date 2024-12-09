@@ -1,6 +1,6 @@
 /******************
-Name:
-ID:
+Name:Miriam Lipkovich
+ID: 336239652
 Assignment: ex3
 *******************/
 
@@ -41,31 +41,31 @@ void InitArray(int cube[][NUM_OF_BRANDS][NUM_OF_TYPES], int size1, int size2, in
         }
     }
 }
-void DailyData(int index, int dailySum[], int size , int cube[][NUM_OF_BRANDS][NUM_OF_TYPES]) {
+void DailyData(int index, int dailySum[], int size , int cube[][NUM_OF_BRANDS][NUM_OF_TYPES]) { //adding data to the array
     int day = 0;
     for (int i = 0; i < size ;i++) {
-        while (cube[day][index][i] != -1) {
+        while (cube[day][index][i] != -1) { //checking the number of the day in which data needs to go
             day++;
         }
         cube[day][index][i] = dailySum[i];
     }
 }
 
-void printBrands(int index) {
-    printf(" ");
+void printBrands(int index) { //function to print brands
+    printf(" "); //I did it before we were told that we can use %s, so I decided to live it as it is
     for (int i = 0; i < BRANDS_NAMES; i++) {
         if (brands[index][i] != '\0')
             printf("%c", brands[index][i]);
     }
 }
-void printTypes(int index) {
+void printTypes(int index) { //function to print types
     printf(" ");
     for (int i = 0; i < TYPES_NAMES; i++) {
         if (types[index][i] != '\0')
             printf("%c", types[index][i]);
     }
 }
-int InputDayValidation( int CurrentDay) {
+int InputDayValidation( int CurrentDay) { //function that validates that the day user entered is positive and is with data
     int UserInputDay;
     while (1) {
         printf("What day would you like to analyze?\n");
@@ -75,7 +75,7 @@ int InputDayValidation( int CurrentDay) {
         else
             break;
     }
-    return UserInputDay;
+    return UserInputDay; //returns the day that user entered after validation
 }
 int TotalSumOfSales(int cube[][NUM_OF_BRANDS][NUM_OF_TYPES], int UserInputDay) {
     int buffer = 0;
@@ -83,7 +83,7 @@ int TotalSumOfSales(int cube[][NUM_OF_BRANDS][NUM_OF_TYPES], int UserInputDay) {
         for (int j = 0; j < NUM_OF_TYPES; j++)
             buffer += cube[UserInputDay][i][j];
     }
-    return buffer;
+    return buffer; //returns total sales of the day in all of brands
 }
 void BestSellingBrand(int cube[][NUM_OF_BRANDS][NUM_OF_TYPES], int UserInputDay) {
     int maxSales = 0;
@@ -113,7 +113,7 @@ void BestSellingType(int cube[][NUM_OF_BRANDS][NUM_OF_TYPES], int UserInputDay) 
             current[i] += cube[UserInputDay][j][i];
         }
     }
-    maxSales = current[0];
+    maxSales = current[0]; //checking place in array with the biggest counter
     int maxIndex = 0;
     for (int i = 1; i < NUM_OF_TYPES; i++) {
         if (current[i] > maxSales) {
@@ -156,7 +156,7 @@ void BestSellingTypeOverall(int cube[][NUM_OF_BRANDS][NUM_OF_TYPES], int totalDa
         }
     }
     int typeSales = current[0];
-    int maxIndex = 0;
+    int maxIndex = 0; // returning place with the biggest counter
     for (int i = 1; i < NUM_OF_TYPES; i++) {
         if (current[i] > typeSales) {
             typeSales = current[i];
@@ -177,14 +177,14 @@ void MostProfitableDay(int cube[][NUM_OF_BRANDS][NUM_OF_TYPES], int totalDay) {
         }
     }
     int dailySales = current[0];
-    int maxIndex = 0;
+    int maxIndex = 0; // checking the highest place
     for (int i = 1; i < totalDay; i++) {
         if (current[i] > dailySales) {
             dailySales = current[i];
             maxIndex = i;
         }
     }
-    printf("The most profitable day was day number %d: %d$\n", maxIndex + 1, dailySales);
+    printf("The most profitable day was day number %d: %d$\n", maxIndex + 1, dailySales); //+1 because in array the days start with 0 and client needs the day that start with 1
 }
 void CalculateDelta(int cube[][NUM_OF_BRANDS][NUM_OF_TYPES], int totalDays) {
     float delta[NUM_OF_BRANDS] = {0};
@@ -197,15 +197,17 @@ void CalculateDelta(int cube[][NUM_OF_BRANDS][NUM_OF_TYPES], int totalDays) {
         }
     }
     for (int i = 0; i < NUM_OF_BRANDS; i++) {
-        if (totalDays > 0)
-            delta[i] = (float)(counter[totalDays - 1][i] - counter[0][i])/(float)(totalDays - 1);
-        else
-            delta[i] = 0;
-    }
-    for (int i = 0; i < NUM_OF_BRANDS; i++) {
-        printf("Brand:");
-        printBrands(i);
-        printf(", Average Delta: %f\n", delta[i]);
+        if (totalDays > 0) {
+            delta[i] = (float)(counter[totalDays - 1][i] - counter[0][i])/(float)(totalDays - 1);//according to math equations the average delta can be counted just by subsraction of last day of sales and first day
+            printf("Brand:");
+            printBrands(i);
+            printf(", Average Delta: %f\n", delta[i]);
+        }
+        else {
+            printf("Brand:");
+            printBrands(i);
+            printf(", Average Delta: -nan\n");
+        }
     }
 }
 void PrintCube(int cube[][NUM_OF_BRANDS][NUM_OF_TYPES], int totalDay) {
@@ -229,7 +231,7 @@ void PrintCube(int cube[][NUM_OF_BRANDS][NUM_OF_TYPES], int totalDay) {
         }
     }
 }
-int AddDatatoCube(int cube[][NUM_OF_BRANDS][NUM_OF_TYPES], int totalDay) {
+int AddDataToCube(int cube[][NUM_OF_BRANDS][NUM_OF_TYPES], int totalDay) {
     int dailySum[NUM_OF_TYPES];
     int index = 0;
     int check = 0;
@@ -254,14 +256,28 @@ int AddDatatoCube(int cube[][NUM_OF_BRANDS][NUM_OF_TYPES], int totalDay) {
             check++; //checking if there is 4 iterations as in 4 brands
         }
     }
-    return totalDay + 1;
+    return totalDay + 1; //returning how many days in array are filled with data
+}
+void AddOneBrand(int cube[][NUM_OF_BRANDS][NUM_OF_TYPES]) {
+    int dailySum[NUM_OF_BRANDS] = {0};
+    int index = 0;
+    printf("Add data sales for brand: \n");
+    scanf("%d", &index);
+    while (index < 0 || index > NUM_OF_TYPES) {
+        printf("This brand is not valid\n");
+        scanf("%d", &index);
+    }
+    printf("Add sales:\n");
+    for (int i = 0; i < NUM_OF_TYPES; i++) {
+        scanf("%d", &dailySum[i]);
+    }
+    DailyData(index, dailySum, NUM_OF_TYPES, cube);
 }
 
 
 
 int main() {
-    int dailySum[NUM_OF_TYPES];
-    int choice, index, day = 0;
+    int choice, day = 0;
     int cube[DAYS_IN_YEAR][NUM_OF_BRANDS][NUM_OF_TYPES];
     InitArray(cube, DAYS_IN_YEAR, NUM_OF_BRANDS, NUM_OF_TYPES);
     printMenu();
@@ -269,21 +285,11 @@ int main() {
     while(choice != done) {
         switch(choice){
             case addOne: {
-                printf("Add data sales for brand: \n");
-                scanf("%d", &index);
-                if (index < 0 || index > NUM_OF_TYPES) {
-                    printf("This brand is not valid\n");
-                    break;
-                }
-                printf("Add sales:\n");
-                for (int i = 0; i < NUM_OF_TYPES; i++) {
-                    scanf("%d", &dailySum[i]);
-                }
-                DailyData(index, dailySum, NUM_OF_TYPES, cube);
+                AddOneBrand(cube);
                 break;
             }
             case addAll: {
-                day = AddDatatoCube(cube, day); //adding day to the array
+                day = AddDataToCube(cube, day); //adding day to the array
                 break;
             }
             case stats: {
