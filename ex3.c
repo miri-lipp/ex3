@@ -1,6 +1,6 @@
 /******************
-Name:Miriam Lipkovich
-ID: 336239652
+Name:
+ID:
 Assignment: ex3
 *******************/
 
