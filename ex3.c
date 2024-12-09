@@ -1,6 +1,6 @@
 /******************
-Name:
-ID:
+Name:Miriam Lipkovich
+ID:336239652
 Assignment: ex3
 *******************/
 
@@ -48,11 +48,13 @@ void DailyData(int index, int dailySum[], int size , int cube[][NUM_OF_BRANDS][N
             day++;
         }
         cube[day][index][i] = dailySum[i];
+        if (dailySum[i] < 0)
+            cube[day][index][i] = 0;
     }
 }
 
 void printBrands(int index) { //function to print brands
-    printf(" "); //I did it before we were told that we can use %s, so I decided to live it as it is
+    printf(" "); //I did it before we were told that we can use %s, so I decided to leave it as it is
     for (int i = 0; i < BRANDS_NAMES; i++) {
         if (brands[index][i] != '\0')
             printf("%c", brands[index][i]);
@@ -258,7 +260,7 @@ int AddDataToCube(int cube[][NUM_OF_BRANDS][NUM_OF_TYPES], int totalDay) {
     }
     return totalDay + 1; //returning how many days in array are filled with data
 }
-void AddOneBrand(int cube[][NUM_OF_BRANDS][NUM_OF_TYPES]) {
+void AddOneBrand(int cube[][NUM_OF_BRANDS][NUM_OF_TYPES]) { //same function as before but adding one brand at a time
     int dailySum[NUM_OF_BRANDS] = {0};
     int index = 0;
     printf("Add data sales for brand: \n");
